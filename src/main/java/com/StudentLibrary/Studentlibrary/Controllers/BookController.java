@@ -3,39 +3,30 @@ package com.StudentLibrary.Studentlibrary.Controllers;
 import com.StudentLibrary.Studentlibrary.Model.Book;
 import com.StudentLibrary.Studentlibrary.Services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = {"http://localhost:3000"})
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping("/book")
 public class BookController {
 
     @Autowired
-    BookService bookService;
+    private BookService bookService;
 
-    @PostMapping("/createBook")
-    public ResponseEntity createBook(@RequestBody Book book){
-
-        bookService.createBook(book);
-        return new ResponseEntity("Book added to the library system", HttpStatus.ACCEPTED);
-
-    }
-    @GetMapping("/getBooks")
-    public ResponseEntity getBooks(@RequestParam(value = "genre",required = false) String genre,
-                                   @RequestParam(value = "available",required = false,defaultValue = "false") boolean available,
-                                   @RequestParam(value = "author",required = false) String author){
-
-        List<Book> bookList=bookService.getBooks(genre,available,author);
-        return new ResponseEntity(bookList,HttpStatus.OK);
-
-
-
-
+    @PostMapping("/create")
+    public ResponseEntity<String> createBook(@RequestBody Book book) {
+        return bookService.createBook(book);
     }
 
+    @GetMapping("/get")
+    public ResponseEntity<List<Book>> getBooks(
+            @RequestParam(required = false) String genre,
+            @RequestParam(defaultValue = "false") boolean available,
+            @RequestParam(required = false) String author) {
 
-
-
+        return bookService.getBooks(genre, available, author);
+    }
 }

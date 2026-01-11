@@ -1,24 +1,13 @@
 package com.StudentLibrary.Studentlibrary.Services;
 
 import com.StudentLibrary.Studentlibrary.Model.Author;
-import com.StudentLibrary.Studentlibrary.Repositories.AuthorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 
-@Service
-public class AuthorService {
-    @Autowired
-    AuthorRepository authorRepository;
+public interface AuthorService {
 
+    ResponseEntity<String> createAuthor(Author author);
 
-    public void createAuthor(Author author){
-        authorRepository.save(author);
+    ResponseEntity<String> updateAuthor(Author author);
 
-    }
-    public void updateAuthor(Author author){
-        authorRepository.updateAuthorDetails(author);
-    }
-    public void deleteAuthor(int id ){
-        authorRepository.deleteCustom(id);
-    }
+    ResponseEntity<String> deleteAuthor(int id);
 }
